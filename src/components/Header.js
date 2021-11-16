@@ -4,7 +4,7 @@ import {FaShoppingCart} from 'react-icons/fa';
 import {Link} from 'react-router-dom'
 const Header = () => {
     return (
-        <Navbar bg="primary" variant="dark" style={{ height: 80 }}>
+        <Navbar bg="dark" variant="dark" style={{ height: 80 }}>
             <Container>
                 <Navbar.Brand>
                     <Link to='/'>Shopping Cart</Link>
@@ -18,9 +18,9 @@ const Header = () => {
 
                 </Navbar.Text>
                 <Dropdown alignRight>
-                    <Dropdown.Toggle variant="success" >
+                    <Dropdown.Toggle  >
                     <FaShoppingCart color="white" fontSize="25px"/>
-                    <Badge  bg="secondary">{10}</Badge>
+                    <Badge  >{10}</Badge>
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
