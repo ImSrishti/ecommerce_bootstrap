@@ -1,8 +1,15 @@
+
 import React from 'react'
-import { Badge, Container, Dropdown, FormControl, Navbar } from 'react-bootstrap'
-import {FaShoppingCart} from 'react-icons/fa';
-import {Link} from 'react-router-dom'
+import { Button,Badge, Container, Dropdown, FormControl, Navbar, Nav } from 'react-bootstrap'
+import { AiFillDelete } from 'react-icons/ai';
+import { FaShoppingCart } from 'react-icons/fa';
+import { Link } from 'react-router-dom'
+import { CartState } from '../context/Context';
 const Header = () => {
+    const {
+        state: { cart },
+        dispatch
+    } = CartState();
     return (
         <Navbar bg="dark" variant="dark" style={{ height: 80 }}>
             <Container>
@@ -17,18 +24,53 @@ const Header = () => {
                     />
 
                 </Navbar.Text>
-                <Dropdown alignRight>
-                    <Dropdown.Toggle  >
-                    <FaShoppingCart color="white" fontSize="25px"/>
-                    <Badge  >{10}</Badge>
-                    </Dropdown.Toggle>
+                <Nav>
+                    <Dropdown align="end" title="Dropdown end" id="dropdown-menu-align-end">
+                        <Dropdown.Toggle  >
+                            <FaShoppingCart color="white" fontSize="25px" />
+                            <Badge  >{cart.length}</Badge>
+                        </Dropdown.Toggle>
 
-                    <Dropdown.Menu>
-                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
+                        <Dropdown.Menu style={{ minWidth: 370 }}>
+                            {cart.length > 0 ? (
+                                <>
+                                    {
+                                        cart.map((prod) => (
+                                            <span className="cartitem" key={prod.id}>
+                                                <img
+                                                    src={prod.image}
+                                                    className="cartItemImg"
+                                                    alt={prod.name}
+                                                />
+                                                <div className="cartItemDetail">
+                                                    <span>{prod.name}</span>
+                                                    <span>{prod.price.split(".")[0]}</span>
+                                                </div>
+                                                <AiFillDelete
+                                                    fontSize="20px"
+                                                    style={{ cursor: "pointer" }}
+                                                    onClick={() =>
+                                                        dispatch({
+                                                            type: "REMOVE_FROM_CART"
+                                                        })
+                                                    }
+                                                />
+                                            </span>
+                                        ))
+                                    }
+                                    <Link to="/cart">
+                                        <Button style={{ width: "95%", margin: "0 10px" }}   >
+                                            Go To Cart
+                                        </Button>
+                                    </Link>
+                                </>
+                            ) : (
+                                <span style={{ padding: 10 }}> Cart is Empty </span>
+                            )}
+
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </Nav>
             </Container>
         </Navbar>
     )
