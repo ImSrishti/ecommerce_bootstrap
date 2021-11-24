@@ -21,7 +21,7 @@ const Header = () => {
                     <FormControl
                         style={{ width: 500 }}
                         placeholder="Search a product"
-                        className="m-auto"
+                        className="m-auto search"
                         onChange={(e)=>{
                             productDispatch({
                             type:"FILTER_BY_SEARCH",
